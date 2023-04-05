@@ -3,31 +3,39 @@ const User = require('../models/user');
 
 
 
-// const isValidRole = async (role = '') => {
-//     const roleExists = await Role.findOne({ role });
-//     if ( !roleExists ){
-//         throw new Error(`El rol ${ role } no esta registrado en la BD`)
-//     }
-// };
+
 const userExistsById = async ( id ) => {
-    const userExists = await User.findByPk( id );
-    if ( !userExists ) {
+    const user = await User.findByPk( id );
+    if ( !user ) {
          throw new Error(`El usuario con id ${ id } no existe`);
-    };
+    } else { return user };
 };
 
-const emailExists = async ( email = '' ) => {
-    const findEmail = await User.findOne({where: { email }});
-    if ( findEmail ) {
-        throw new Error(`El correo ${ email } ya esta registrado`);
-    } else { return }
+// Busca un usuario por el email.
+// Por default lanza un error si existe un usuario con ese correo. Si se le pasa el param 'false', devuelve el usuario completo  
+const getUserEmail = async ( email = '', throwErr = true ) => {
+    const user = await User.findOne({where: { email }});
+    
+    if ( throwErr ) {
+        if ( user ) {
+            throw new Error(`El correo ${ email } ya esta registrado`);
+        } else { return }
+    } else { return user }
 };
 
-const usernameExists = async ( username = '' ) => {
-    const findUsername = await User.findOne({where: { username }});
-    if ( findUsername ) {
-        throw new Error(`El username ${ username } ya existe`);
-    } else { return }
+
+// Busca un usuario por username.
+// Por default lanza un error si ya existe el username. Si se le pasa el param false, devuelve el user
+const getUsername = async ( username = '', throwErr = true ) => {
+    const user = await User.findOne({where: { username }});
+    
+    if ( throwErr ) {
+        if ( user ) {
+            throw new Error(`El username ${ username } ya existe`);
+        } else { return }
+    } else {
+        return user 
+    }
 };
 
 
@@ -36,7 +44,7 @@ const usernameExists = async ( username = '' ) => {
 
 
 module.exports = {
-    emailExists,
+    getUserEmail,
     userExistsById,
-    usernameExists
+    getUsername,
 }

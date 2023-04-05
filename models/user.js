@@ -3,7 +3,7 @@ const { DataTypes } = require('sequelize');
 const db = require('../database/connection');
 
 const User = db.define('User', {
-    id_user: { // id personalizado de sequelize
+    uid: { // id personalizado de sequelize
         type: DataTypes.STRING,
         field: 'user_id',
         primaryKey: true,

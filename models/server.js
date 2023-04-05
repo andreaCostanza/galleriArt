@@ -10,6 +10,7 @@ class Server {
         this.port = process.env.PORT;
 
         // PATHS
+        this.authPath = '/api/auth';
         this.usersPath = '/api/users';
 
         // TODO: añadir otros paths
@@ -48,7 +49,9 @@ class Server {
 
     routes() {
 
-        this.app.use(this.usersPath, require('../routes/users'))
+        this.app.use(this.authPath, require('../routes/auth'));
+        
+        this.app.use(this.usersPath, require('../routes/users'));
     };
 
     listen() {

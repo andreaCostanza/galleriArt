@@ -6,12 +6,18 @@ const { getUsers,
         deleteUsers, 
         getUserById,
         postUser,
-        changeBanStatus} = require('../controllers/users');
+        changeBanStatus
+} = require('../controllers/users');
 
-const validateFields = require('../helpers/validate-fields');
-const { userExistsById, 
-        emailExists, 
-        usernameExists } = require('../helpers/validations-db');
+
+const {
+    validateFields,
+    validateJWT,
+    isAdmin,
+    userExistsById, 
+    getUserEmail, 
+    getUsername
+} = require('../helpers')
 
 const router = Router();
 
@@ -21,7 +27,7 @@ router.get('/:id', [
     check( 'id', 'No es un id válido' ).isUUID(),
     check( 'id' ).custom( userExistsById ),
     validateFields
-] ,getUserById);
+], getUserById);
 
 router.post('/', [
     check( 'first_name', 'El nombre es obligatorio' ).notEmpty(),
@@ -30,29 +36,31 @@ router.post('/', [
     check( 'email', 'El email es obligatorio' ).notEmpty(),
     check( 'pass', 'La contraseña debe tener más de 6 caracteres' ).isLength({ min: 6}),
     check( 'email', 'El email no es válido' ).isEmail(),
-    check( 'email' ).custom( emailExists ),
-    check( 'username' ).custom( usernameExists ),
+    check( 'email' ).custom( getUserEmail ),
+    check( 'username' ).custom( getUsername ),
     validateFields
 ], postUser);
 
 router.put('/:id', [
+    validateJWT,
     check( 'id', 'No es un id válido' ).isUUID(),
     check( 'id' ).custom( userExistsById ),
-    check( 'email', 'El email no es válido' ).custom( emailExists ).isEmail(),
-    check( 'username' ).custom( usernameExists ),
+    check( 'email' ).custom( getUserEmail ),
+    check( 'username' ).custom( getUsername ),
     validateFields
 ], putUser);
 
-router.delete('/:id', [ 
+router.delete('/:id', [
+    validateJWT,
+    isAdmin, 
     check( 'id', 'No es un id válido' ).isUUID(),
     check( 'id' ).custom( userExistsById )
 ], deleteUsers);
 
-router.put('/ban/:id', changeBanStatus);
-
-
-
-
+router.put('/ban/:id', [
+    validateJWT,
+    isAdmin
+], changeBanStatus);
 
 
 

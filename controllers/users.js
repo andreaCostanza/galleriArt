@@ -1,12 +1,9 @@
 const { response, request } = require('express');
+const bcrypt = require('bcryptjs');
 
 const User = require('../models/user');
-const randomID = require('../helpers/random-id')
-
-/* TODO: hash constrasena
-         permessi
-         permessi modifca password
-*/
+const randomID = require('../helpers/random-id');
+const { getUsername } = require('../helpers');
 
 
 const getUsers = async (req = request, res = response) => {
@@ -32,13 +29,15 @@ const getUserById = async (req = request, res = response) => {
     
 }
 
+
 const postUser = async (req, res) => {
     
     const data = req.body;
     
-    const user = new User({id_user: randomID(), ...data});
+    const user = new User({uid: randomID(), ...data});
 
-    // TODO: Hash contraseña
+    const salt = bcrypt.genSaltSync();
+    user.pass = bcrypt.hashSync( data.pass, salt);
 
 
     await user.save();
@@ -53,13 +52,17 @@ const postUser = async (req, res) => {
 
 const putUser = async (req, res) => {
     
-    // TODO: impedire di cambiare password
-
     const { id } = req.params;
     const { body } = req;
     
  
     const user = await User.findByPk( id );
+    
+    if ( body.pass ) { // Hash contraseña
+        
+        const salt = bcrypt.genSaltSync();
+        body.pass = bcrypt.hashSync( body.pass, salt);
+    }
 
     await user.update( body );
 
@@ -72,8 +75,6 @@ const putUser = async (req, res) => {
 
 const changeBanStatus = async (req, res) =>{
     
-    // verificar si usuario es admin
-
     const { id } = req.params;
     const user = await User.findByPk( id );
     if ( !user ) {
@@ -103,8 +104,10 @@ const changeBanStatus = async (req, res) =>{
 const deleteUsers = async (req, res) => {
     
     const { id } = req.params;
-    const user = await User.findByPk( id );
 
+    const user = await User.findByPk( id );
+    
+    
     // user.destroy() elimina el usuario permanentemente
 
     /* No haremos eliminación permanente para mantener la integridad de la BD. 
@@ -124,5 +127,6 @@ module.exports = {
     postUser,
     putUser,
     changeBanStatus,
-    deleteUsers
+    deleteUsers,
+    getUserByUsername
 }

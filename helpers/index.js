@@ -5,6 +5,7 @@ const validateJWT = require('./validate-jwt');
 const generateJWT = require('./generate-jwt');
 const isAdmin = require('./validate-role');
 const validationsDB = require('./validations-db');
+const uploadFile = require('./file-storage-engine');
 
 
 module.exports = {
@@ -12,5 +13,6 @@ module.exports = {
     validateJWT,
     generateJWT,
     isAdmin,
+    uploadFile,
     ...validationsDB
 }

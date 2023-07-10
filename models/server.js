@@ -12,6 +12,7 @@ class Server {
         // PATHS
         this.authPath = '/api/auth';
         this.usersPath = '/api/users';
+        this.imagesPath = '/api/images';
 
         // TODO: añadir otros paths
         
@@ -52,6 +53,8 @@ class Server {
         this.app.use(this.authPath, require('../routes/auth'));
         
         this.app.use(this.usersPath, require('../routes/users'));
+
+        this.app.use(this.imagesPath, require('../routes/images'));
     };
 
     listen() {

@@ -3,15 +3,15 @@ const bcrypt = require('bcryptjs');
 
 const User = require('../models/user');
 const randomID = require('../helpers/random-id');
-const { getUsername } = require('../helpers');
+
 
 
 const getUsers = async (req = request, res = response) => {
     
-    const users = await User.findAll();
-
+    const users = await User.findAll({ where: { del_status: false } });
+     
     res.json({
-        msg: 'get API - controller',
+        msg: 'get users API - controller',
         users
     });
 }
@@ -29,14 +29,14 @@ const getUserById = async (req = request, res = response) => {
     
 }
 
-
+// Crea usuario
 const postUser = async (req, res) => {
     
     const data = req.body;
     
     const user = new User({uid: randomID(), ...data});
 
-    const salt = bcrypt.genSaltSync();
+    const salt = bcrypt.genSaltSync(); //Hash contraseña
     user.pass = bcrypt.hashSync( data.pass, salt);
 
 
@@ -128,5 +128,5 @@ module.exports = {
     putUser,
     changeBanStatus,
     deleteUsers,
-    getUserByUsername
+    //getUserByUsername
 }

@@ -1,4 +1,5 @@
 const { DataTypes } = require('sequelize');
+const Media = require('./media');
 
 const db = require('../database/connection');
 
@@ -40,12 +41,13 @@ const User = db.define('User', {
     del_status: {
         type: DataTypes.BOOLEAN,
         defaultValue: false
-    },
-    img_fk: {
-        type: DataTypes.INTEGER
     }
 }, {
     timestamps: false
 });
+
+User.hasOne(Media, {
+    foreignKey: 'img_fk'
+})
 
 module.exports = User;

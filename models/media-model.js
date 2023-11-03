@@ -1,7 +1,6 @@
 const { DataTypes } = require('sequelize');
 
 const db = require('../database/connection');
-const User = require('./user');
 
 const Media = db.define( 'Media', {
     uid: {
@@ -19,6 +18,5 @@ const Media = db.define( 'Media', {
     timestamps: false
 });
 
-Media.belongsTo(User);
 
 module.exports = Media;

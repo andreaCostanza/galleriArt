@@ -1,7 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 
-const db = require('../database/connection');
+const db = require('./database/connection');
 
 class Server {
 
@@ -50,11 +50,11 @@ class Server {
 
     routes() {
 
-        this.app.use(this.authPath, require('../routes/auth'));
+        this.app.use(this.authPath, require('./routes/auth-routes'));
         
-        this.app.use(this.usersPath, require('../routes/users'));
+        this.app.use(this.usersPath, require('./routes/users-routes'));
 
-        this.app.use(this.imagesPath, require('../routes/images'));
+        this.app.use(this.imagesPath, require('./routes/images-routes'));
     };
 
     listen() {

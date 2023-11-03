@@ -1,5 +1,5 @@
 const { DataTypes } = require('sequelize');
-const Media = require('./media');
+const Media = require('./media-model');
 
 const db = require('../database/connection');
 
@@ -41,6 +41,9 @@ const User = db.define('User', {
     del_status: {
         type: DataTypes.BOOLEAN,
         defaultValue: false
+    },
+    img_fk: {
+        type: DataTypes.STRING
     }
 }, {
     timestamps: false

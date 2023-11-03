@@ -1,7 +1,7 @@
 const { response, request } = require('express');
 
 
-const Media = require('../models/media');
+const Media = require('../models/media-model');
 
 const randomID = require('../helpers/random-id');
 
@@ -12,11 +12,25 @@ const postImage = async ( req = request, res = response ) => {
     const file = req.file;
     
     const img = new Media({uid: randomID(), img_path: file.path});
+
     
+
     await img.save();
+    
+    const img_fk = img.uid;
+    console.log(img_fk);
+
+    const user = req.user;
+
+    
+
+    await user.update({ img_fk })
+    
+    console.log(user);
+    
 
     res.json({
-        msg: 'Image uploaded to server succesfully',
+        msg: 'Profile pic updated!',
         img
     });
 };

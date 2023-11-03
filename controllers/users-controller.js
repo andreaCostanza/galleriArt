@@ -29,6 +29,7 @@ const getUserById = async (req = request, res = response) => {
     
 }
 
+
 // Crea usuario
 const postUser = async (req, res) => {
     

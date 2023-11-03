@@ -1,27 +1,31 @@
 const { response } = require("express");
 const bcrypt = require('bcryptjs');
+const User = require('../models/user')
 
 const {
     generateJWT,
-    getUserEmail
-} = require('../helpers')
+} = require('../helpers');
+const { where } = require("sequelize");
 
 
 const login = async (req, res = response ) => {
 
     const { email, pass } = req.body;
+    
+    
 
     try {
 
-        // verificar si email existe
-        const user = await getUserEmail( email, false );
-        
+        const user = await User.findOne( {where: {email} } );
+
         if ( !user ) {
             return res.status(400).json({
-                msg: 'El correo no es correcto - no está registrado'
+                msg: 'El correo es incorrecto - no existe // from controller/auth'
             });
         };
-        //verificar status del usuario
+
+        
+        // verificar status del usuario
         const status = user.del_status;
 
         if ( status ) {

@@ -7,7 +7,7 @@ const { getUsers,
         getUserById,
         postUser,
         changeBanStatus
-} = require('../controllers/users');
+} = require('../controllers/users-controller');
 
 
 const {
@@ -16,7 +16,7 @@ const {
     isAdmin,
     userExistsById, 
     getUserEmail, 
-    getUsername
+    getUsername, emailExist, usernameExist
 } = require('../helpers')
 
 const router = Router();
@@ -36,8 +36,8 @@ router.post('/', [
     check( 'email', 'El email es obligatorio' ).notEmpty(),
     check( 'pass', 'La contraseña debe tener más de 6 caracteres' ).isLength({ min: 6}),
     check( 'email', 'El email no es válido' ).isEmail(),
-    check( 'email' ).custom( getUserEmail ),
-    check( 'username' ).custom( getUsername ),
+    emailExist,
+    usernameExist,
     validateFields
 ], postUser);
 

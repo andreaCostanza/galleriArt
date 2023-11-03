@@ -1,6 +1,6 @@
 const { response } = require('express');
 const jwt = require('jsonwebtoken');
-const { userExistsById } = require('./validations-db');
+const { userExistsById } = require('./validations-user');
 
 const validateJWT = async ( req, res = response, next ) => {
 

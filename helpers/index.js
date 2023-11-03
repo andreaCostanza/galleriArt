@@ -4,7 +4,7 @@ const validateFields = require('./validate-fields');
 const validateJWT = require('./validate-jwt');
 const generateJWT = require('./generate-jwt');
 const isAdmin = require('./validate-role');
-const validationsDB = require('./validations-db');
+const validationsDB = require('./validations-user');
 const uploadFile = require('./file-storage-engine');
 
 

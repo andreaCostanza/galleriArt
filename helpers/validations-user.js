@@ -17,31 +17,41 @@ const userExistsById = async ( id ) => {
 
 // Comprueba si el email existe en la BBDD y lanza un error si ya existe
 
-const emailExist = ( req, res, next ) => {
+const emailExist = async ( req, res, next ) => {
     
-    const { email } = req.User.findOne( {where: email, include: Media} );
+    const { email } = req.body;
 
     if ( email ) {
-        res.status(400).json({
-            msg: `El correo ${ email } ya esta registrado`
-        })
-    };
+        
+        const query = await User.findOne( {where: {email} } );
 
+        if ( query && email == query.email ) {
+            res.status(400).json({
+                msg: `El correo ${ email } ya esta registrado`
+            })
+        }; 
+    }
+    
     next();
 
 };
 
 // Comprueba si el username existe en la BBDD y lanza un error si ya existe
 
-const usernameExist = ( req, res, next ) => {
+const usernameExist = async ( req, res, next ) => {
     
-    const { username } = req.User.findOne( {where: username} );
+    const { username } = req.body;
 
     if ( username ) {
-        res.status(400).json({
-            msg: `El correo ${ username } ya esta existe`
-        })
-    };
+        
+        const query = await User.findOne( {where: {username} } );
+
+        if ( query && username == query.username ) {
+            res.status(400).json({
+                msg: `El correo ${ username } ya esta registrado`
+            })
+        };
+    }
     
     next();
 
@@ -62,17 +72,18 @@ const usernameExist = ( req, res, next ) => {
 
 // Busca un usuario por username.
 // Por default lanza un error si ya existe el username. Si se le pasa el param false, devuelve el user
-const getUsername = async ( username = '', throwErr = true ) => {
-    const user = await User.findOne({where: { username }});
+
+// const getUsername = async ( username = '', throwErr = true ) => {
+//     const user = await User.findOne({where: { username }});
     
-    if ( throwErr ) {
-        if ( user ) {
-            throw new Error(`El username ${ username } ya existe`);
-        } else { return }
-    } else {
-        return user 
-    }
-};
+//     if ( throwErr ) {
+//         if ( user ) {
+//             throw new Error(`El username ${ username } ya existe`);
+//         } else { return }
+//     } else {
+//         return user 
+//     }
+// };
 
 
 

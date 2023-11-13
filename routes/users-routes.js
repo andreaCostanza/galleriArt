@@ -1,5 +1,6 @@
 
 const { Router } = require('express');
+const multer = require('multer');
 const { check } = require('express-validator');
 const { getUsers,
         putUser,
@@ -9,14 +10,18 @@ const { getUsers,
         changeBanStatus
 } = require('../controllers/users-controller');
 
+const { updateProfilePic } = require('../controllers/media-controller');
+
 
 const {
     validateFields,
     validateJWT,
     isAdmin,
     userExistsById, 
-    getUserEmail, 
-    getUsername, emailExist, usernameExist
+    emailExist,
+    usernameExist,
+    banAndDelGuard,
+    uploadFile,
 } = require('../helpers')
 
 const router = Router();
@@ -29,7 +34,7 @@ router.get('/:id', [
     validateFields
 ], getUserById);
 
-router.post('/', [
+router.post('/signup', [
     check( 'first_name', 'El nombre es obligatorio' ).notEmpty(),
     check( 'last_name', 'El apellido es obligatorio' ).notEmpty(),
     check( 'username', 'El username es obligatorio' ).notEmpty(),
@@ -43,10 +48,11 @@ router.post('/', [
 
 router.put('/:id', [
     validateJWT,
+    banAndDelGuard,
     check( 'id', 'No es un id válido' ).isUUID(),
     check( 'id' ).custom( userExistsById ),
-    check( 'email' ).custom( getUserEmail ),
-    check( 'username' ).custom( getUsername ),
+    emailExist,
+    usernameExist,
     validateFields
 ], putUser);
 
@@ -61,6 +67,13 @@ router.put('/ban/:id', [
     validateJWT,
     isAdmin
 ], changeBanStatus);
+
+router.post( '/profile-pic',
+    validateJWT,
+    uploadFile.single('image'),
+    updateProfilePic);
+
+
 
 
 

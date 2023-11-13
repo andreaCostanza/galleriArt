@@ -41,15 +41,12 @@ const User = db.define('User', {
     del_status: {
         type: DataTypes.BOOLEAN,
         defaultValue: false
-    },
-    img_fk: {
-        type: DataTypes.STRING
     }
 }, {
     timestamps: false
 });
 
-User.hasOne(Media, {
+Media.hasOne(User, {
     foreignKey: 'img_fk'
 })
 

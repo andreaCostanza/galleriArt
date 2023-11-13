@@ -114,6 +114,7 @@ const deleteUsers = async (req, res) => {
     /* No haremos eliminación permanente para mantener la integridad de la BD. 
     ** En su lugar tenemos el atributo del_status, si está en true significa que el usuario ha sido "borrado"
     ** de nuestra aplicación y no aparecerá cuando hagamos el get de los usuarios*/
+
     await user.update({ del_status: true });
 
     res.json({

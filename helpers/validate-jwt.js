@@ -4,7 +4,7 @@ const { userExistsById } = require('./validations-user');
 
 const validateJWT = async ( req, res = response, next ) => {
 
-    const token = req.header( 'x-token' );
+    const token = req.header( 'access-token' );
 
     if ( !token ){
         return res.status(401).json({

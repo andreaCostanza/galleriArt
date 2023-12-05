@@ -47,7 +47,9 @@ const User = db.define('User', {
 });
 
 Media.hasOne(User, {
-    foreignKey: 'img_fk'
-})
+    foreignKey: 'img_fk',
+    defaultValue: process.env.DEFAULTIMGID
+});
+//User.belongsTo(Media);
 
 module.exports = User;

@@ -12,7 +12,6 @@ const { getUsers,
 
 const { updateProfilePic } = require('../controllers/media-controller');
 
-
 const {
     validateFields,
     validateJWT,
@@ -68,10 +67,10 @@ router.put('/ban/:id', [
     isAdmin
 ], changeBanStatus);
 
-router.post( '/profile-pic',
+router.post( '/profile-pic',[
     validateJWT,
-    uploadFile.single('image'),
-    updateProfilePic);
+    uploadFile.single('image')
+], updateProfilePic);
 
 
 

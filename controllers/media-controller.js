@@ -7,6 +7,22 @@ const Media = require('../models/media-model');
 const randomID = require('../helpers/random-id');
 
 // saves file path to DB
+const savePicture = async ( req = request, res = response, next ) => {
+
+    const file = req.file;
+    
+    const img = new Media({uid: randomID(), img_path: file.path});
+
+    await img.save();
+
+    const imgUid = img.uid;
+
+    req.img = imgUid;
+
+    next();
+}
+
+
 
 const updateProfilePic = async ( req = request, res = response ) => {
     
@@ -52,6 +68,10 @@ const updateProfilePic = async ( req = request, res = response ) => {
 
 };
 
+
+
+
 module.exports = {
+    savePicture,
     updateProfilePic
 }

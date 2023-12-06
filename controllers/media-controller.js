@@ -6,25 +6,9 @@ const Media = require('../models/media-model');
 
 const randomID = require('../helpers/random-id');
 
-// saves file path to DB
-const savePicture = async ( req = request, res = response, next ) => {
-
-    const file = req.file;
-    
-    const img = new Media({uid: randomID(), img_path: file.path});
-
-    await img.save();
-
-    const imgUid = img.uid;
-
-    req.img = imgUid;
-
-    next();
-}
 
 
-
-const updateProfilePic = async ( req = request, res = response ) => {
+const saveFileToDB = async ( req = request, res = response, next ) => {
     
     // saves the new image to DB
     const file = req.file;
@@ -32,10 +16,20 @@ const updateProfilePic = async ( req = request, res = response ) => {
     const img = new Media({uid: randomID(), img_path: file.path});
 
     await img.save();
-    
-    
-    // updates image linked to user
-    const img_fk = img.uid;
+
+    console.log('File saved to DB');
+
+    req.img_fk = img.uid;
+
+    next();
+
+
+};
+
+
+const updateProfilePic = async ( req, res, next ) => {
+
+    const { img_fk } = req;
     
     const user = req.user;
     const prev_img = await Media.findByPk( user.img_fk );
@@ -53,6 +47,7 @@ const updateProfilePic = async ( req = request, res = response ) => {
                 console.log(`${prev_img.img_path} was deleted from fs`);
             });
             await Media.destroy( {where: {uid: prev_img.uid }} );
+            console.log('file was deleted from DB');
         } catch (error) {
             console.log( error )
             res.json({
@@ -63,15 +58,13 @@ const updateProfilePic = async ( req = request, res = response ) => {
 
     res.json({
         msg: 'Profile pic updated!',
-        img
     });
-
-};
+}
 
 
 
 
 module.exports = {
-    savePicture,
+    saveFileToDB,
     updateProfilePic
 }

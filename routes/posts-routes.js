@@ -1,22 +1,38 @@
 const { Router } = require('express');
 const multer = require('multer');
-
 const { check } = require('express-validator');
-const { validateJWT, uploadFile } = require('../helpers');
-const { savePicture } = require('../controllers/media-controller');
-const { createPost } = require('../controllers/posts-controller');
+
+const { createPost,
+        deletePost, 
+        getUserPosts
+      } = require('../controllers/posts-controller');
+
+const { saveFileToDB } = require('../controllers/media-controller');
+
+const { validateJWT, uploadFile, userExistsById } = require('../helpers');
 
 
 const router = Router();
 
-// TODO: add checks middleware
 router.post( '/', [
     validateJWT,
     uploadFile.single('image'),
-    savePicture
-], createPost);
+    saveFileToDB
+], createPost)
 
+router.delete( '/:id', [
+    validateJWT,
+    check('id', 'No es un ID válido').isUUID()
 
+], deletePost);
+
+router.get( '/by-user/:id', [
+    validateJWT,
+    check('id', 'No es un ID válido').isUUID(),
+    check( 'id' ).custom( userExistsById ),
+], getUserPosts);
+
+//TODO: get single post
 
 
 module.exports = router;

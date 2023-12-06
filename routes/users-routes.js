@@ -10,7 +10,7 @@ const { getUsers,
         changeBanStatus
 } = require('../controllers/users-controller');
 
-const { updateProfilePic } = require('../controllers/media-controller');
+const { updateProfilePic, saveFileToDB } = require('../controllers/media-controller');
 
 const {
     validateFields,
@@ -69,7 +69,8 @@ router.put('/ban/:id', [
 
 router.post( '/profile-pic',[
     validateJWT,
-    uploadFile.single('image')
+    uploadFile.single('image'),
+    saveFileToDB
 ], updateProfilePic);
 
 

@@ -32,9 +32,9 @@ const updateProfilePic = async ( req, res, next ) => {
     const { img_fk } = req;
     
     const user = req.user;
-    const prev_img = await Media.findByPk( user.img_fk );
-
-    await user.update({ img_fk });
+    const prev_img = await user.getMedium();
+    
+    await user.setMedium( img_fk );
 
 
     const check = prev_img.uid.match( process.env.DEFAULTIMGID ); //check if the previous profile pic is the default pic

@@ -21,10 +21,13 @@ const getUserById = async (req = request, res = response) => {
     const { id } = req.params;
 
     const user = await User.findByPk( id );
+
+    const profilePicture = await user.getMedium();
     
     res.json({
         msg: 'get by id API - controller',
-        user
+        user,
+        profilePicture
     });
     
 }

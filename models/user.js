@@ -46,7 +46,7 @@ const User = db.define('User', {
     timestamps: false
 });
 
-Media.hasOne(User, {
+User.belongsTo(Media, {
     foreignKey: 'img_fk',
     defaultValue: process.env.DEFAULTIMGID
 });

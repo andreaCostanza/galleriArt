@@ -32,7 +32,7 @@ User.hasMany(Post, {
 });
 //Post.belongsTo(User);
 
-Media.hasOne(Post, {
+Post.belongsTo(Media, {
     foreignKey: 'img_fk'
 });
 //Post.belongsTo(Media);

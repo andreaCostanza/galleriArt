@@ -47,28 +47,34 @@ const deletePost = async (req, res) => {
 const getUserPosts = async (req, res) => {
 
     const user_id = req.params.id;
-    const { username } = await userExistsById( user_id );
+    const postOwner = await userExistsById( user_id );
 
     try {
-            const postsCollection = await Post.findAll({
-                                            where: {
-                                                user_fk: user_id,
-                                                del_status: false
-                                            },
-                                            order: ['creation_date', 'DESC']
-                                        });
-            console.log(postsCollection)
+            const postsCollection = await postOwner.getPosts({
+                where: {
+                    del_status: false
+                },
+                order: [ ['creation_date', 'DESC'] ]
+            });
 
-            const emptyArray = postsCollection.length;
+            const isArrayEmpty = postsCollection.length;
 
-            if ( emptyArray === 0 ) {
+            if ( isArrayEmpty === 0 ) {
                 
-                res.json({ msg: `${username} doesn't have any posts yet!` });
+                res.json({ msg: `${ postOwner.username } doesn't have any posts yet!` });
 
                 } else {
+
+                    for (let i = 0; i < postsCollection.length; i++) {
+                        
+                        const post = postsCollection[i];
+                        const postImg = await post.getMedium();
+                        post.dataValues.img_path = postImg.img_path;
+                    }
+
                     res.json({
-                        msg: `${username}'s posts by creation date:`,
-                        username,
+                        msg: `${ postOwner.username }'s posts by creation date:`,
+                        postOwner,
                         postsCollection
                     });
                 }

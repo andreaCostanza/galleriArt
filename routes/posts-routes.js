@@ -7,7 +7,7 @@ const { createPost,
         getUserPosts
       } = require('../controllers/posts-controller');
 
-const { saveFileToDB } = require('../controllers/media-controller');
+const { saveFileToDB, getRandomImgs } = require('../controllers/media-controller');
 
 const { validateJWT, uploadFile, userExistsById } = require('../helpers');
 
@@ -33,6 +33,10 @@ router.get( '/by-user/:id', [
 ], getUserPosts);
 
 //TODO: get single post
+
+//TODO: MOVE TO IMG ENDPOINT
+
+router.get('/random-imgs', getRandomImgs)
 
 
 module.exports = router;

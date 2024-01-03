@@ -5,6 +5,24 @@ const { unlink } = require('fs');
 const Media = require('../models/media-model');
 
 const randomID = require('../helpers/random-id');
+const db = require('../database/connection');
+
+
+const getRandomImgs = async ( req = request, res = response ) => {
+
+    const images = await Media.findAll({order: db.random(), limit: 5});
+    console.log(images);
+    // let imagesSrc = [];
+
+    // for ( let i = 0; i = images.length; i++) {
+    //     imagesSrc[i] = images[i].img_path;
+    // }
+
+    res.json({
+        msg: 'imgs fetched correctly',
+        images
+    })
+}
 
 
 
@@ -66,5 +84,6 @@ const updateProfilePic = async ( req, res, next ) => {
 
 module.exports = {
     saveFileToDB,
-    updateProfilePic
+    updateProfilePic,
+    getRandomImgs
 }

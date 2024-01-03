@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <title>galleriArt</title>
+    
+    <style>
+        body {
+            padding-top: 50px; /* Adjust based on your navbar height */
+            overflow-x: hidden; /* Prevent horizontal scrollbar */
+        }
+        .btn-container {
+            bottom: 100px;
+        }
+    </style>
+
+</head>
+<body>
+
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+        <a class="navbar-brand" href="#">
+            galleriArt
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">About</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Contact</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Logo -->
+    <div class="container mt-5 p-3 text-center">
+        <p class="display-4 mb-2">Start creating your own gallery!</p>
+        <img src="../images/galleriArt-logo.png" alt="galleriArt Logo" class="img-fluid mt-4 mb-2" style="height: 200px;">
+    </div>
+
+    <!-- Carousel -->
+        <!-- <div id="imageCarousel" class="carousel slide" data-ride="carousel">
+            <div class="carousel-inner">
+             Images will be dynamically added here 
+            </div>
+        </div> -->
+
+    <!-- Sign Up and Login Buttons -->
+    <div class="btn-container my-3 text-center">
+        <a href="./signup.html" class="btn btn-primary mx-2">Sign Up</a>
+        <a href="#" class="btn btn-success mx-2">Login</a>
+    </div>
+
+    <!-- Script, Bootstrap JS and jQuery (required for the carousel) -->
+    <script src="../scripts/home.js"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
+</body>
+</html>

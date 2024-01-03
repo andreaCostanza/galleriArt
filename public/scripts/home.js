@@ -40,7 +40,7 @@ document.addEventListener("DOMContentLoaded", function () {
             const imgElement = document.createElement("img");
             imgElement.src = image;
             imgElement.alt = "Random Image-" + index;
-            
+            imgElement.classList.add("rounded", "d-block", "w-100");
 
             carouselItem.appendChild(imgElement);
             carouselInner.appendChild(carouselItem);

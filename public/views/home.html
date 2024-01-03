@@ -3,16 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <title>galleriArt</title>
     
     <style>
         body {
             padding-top: 50px; /* Adjust based on your navbar height */
-            overflow-x: hidden; /* Prevent horizontal scrollbar */
+            overflow: hidden; /* Prevent horizontal scrollbar */
         }
         .btn-container {
             bottom: 100px;
+        }
+        #imageCarousel {
+            width: 50%;
+            margin: auto;
+        }
+        .carousel-inner > .carousel-item img {
+            object-fit: contain;
+            object-position: center;
+            height: 50vh;
+            overflow: hidden;
         }
     </style>
 
@@ -21,8 +31,8 @@
 
     <!-- Navigation Bar -->
     <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
-        <a class="navbar-brand" href="#">
-            galleriArt
+        <a class="navbar-brand p-2" href="#">
+            <img src="../images/galleriArt-logo.png" alt="galleriArt Logo" class="img-fluid ms-2" style="height: 50px;">
         </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -45,16 +55,16 @@
     <!-- Logo -->
     <div class="container mt-5 p-3 text-center">
         <p class="display-4 mb-2">Start creating your own gallery!</p>
-        <img src="../images/galleriArt-logo.png" alt="galleriArt Logo" class="img-fluid mt-4 mb-2" style="height: 200px;">
     </div>
 
     <!-- Carousel -->
-        <!-- <div id="imageCarousel" class="carousel slide" data-ride="carousel">
+    <!-- <div class="container-sm w-75 h-50"> -->
+        <div id="imageCarousel" class="carousel slide img-thumbnail" data-bs-ride="carousel">
             <div class="carousel-inner">
-             Images will be dynamically added here 
+             <!-- Images will be dynamically added here  -->
             </div>
-        </div> -->
-
+        </div>
+    <!-- </div> -->
     <!-- Sign Up and Login Buttons -->
     <div class="btn-container my-3 text-center">
         <a href="./signup.html" class="btn btn-primary mx-2">Sign Up</a>
@@ -63,9 +73,7 @@
 
     <!-- Script, Bootstrap JS and jQuery (required for the carousel) -->
     <script src="../scripts/home.js"></script>
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>
 
 </body>
 </html>
